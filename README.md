@@ -1,1 +1,1 @@
-contoh baru
+contoh baru new ori
