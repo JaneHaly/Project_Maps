@@ -3,3 +3,4 @@ jam 15.02
 sekian
 dika
 tes
+belajar git dan github
