@@ -3,4 +3,4 @@ jam 15.02
 anjayy
 tes jam 19.33
 
-JAKA kontol
+SEMUA kontol
