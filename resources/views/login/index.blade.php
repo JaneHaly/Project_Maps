@@ -118,7 +118,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
   <div class="min-h-[1024px] grid grid-cols-1 lg:grid-cols-12" data-stitch-vh="min-h-[1024px]===min-h-screen">
     <!-- Left Spatial Showcase Panel -->
     <aside class="relative hidden lg:flex lg:col-span-7 flex-col justify-between p-section overflow-hidden bg-primary-navy">
-      <img src="login.jpg" alt="Gedung Perpustakaan Pusat Universitas Negeri Surabaya" class="absolute inset-0 w-full h-full object-cover">
+      <img src="{{ asset('images/login.jpg') }}" alt="Gedung Perpustakaan Pusat Universitas Negeri Surabaya" class="absolute inset-0 w-full h-full object-cover">
       <div class="absolute inset-0 bg-gradient-to-t from-primary-navy/95 via-primary-navy/75 to-primary-navy/80" aria-hidden="true"></div>
 
       <!-- Top Brand Mark -->
