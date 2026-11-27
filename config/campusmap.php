@@ -14,6 +14,20 @@ return [
 
     'campuses' => ['Kampus A', 'Kampus B', 'Kampus C'],
 
+    'map' => [
+    'center' => [
+        'lat' => -7.300000,
+        'lng' => 112.700000,
+    ],
+
+    'zoom' => 17,
+    'max_zoom' => 19,
+
+    'tile_url' => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+
+    'attribution' => '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    ],
+
     // route = nama route Laravel. null = halaman belum dibuat (link jadi "#").
     'navigation' => [
         ['label' => 'Map',             'mobile_label' => 'Map',        'icon' => 'map',      'route' => 'map'],
@@ -50,7 +64,12 @@ return [
             'floors'     => 3,
             'photo'      => 'fakultas-teknik.jpg',
             'in_sidebar' => true,
-            'marker'     => ['x' => 268, 'y' => 360, 'icon' => 'building-2', 'tone' => 'featured'],
+            'lat' => -7.315705, 
+            'lng' => 112.726982,
+            'marker' => [
+                'icon' => 'building-2',
+                'tone' => 'featured',
+            ],
         ],
 
         'perpustakaan' => [
@@ -62,7 +81,12 @@ return [
             'summary'      => 'Ruang baca tenang, coworking space, dan Wi-Fi cepat.',
             'badge'        => ['label' => 'Indoor', 'variant' => 'accent'],
             'in_sidebar'   => true,
-            'marker'       => ['x' => 248, 'y' => 200, 'icon' => 'book-open', 'tone' => 'primary'],
+            'lat' => -7.300300,
+            'lng' => 112.700300,
+            'marker' => [
+                'icon' => 'book-open',
+                'tone' => 'primary',
+            ],
         ],
 
         'gedung-a1' => [
@@ -74,7 +98,12 @@ return [
             'summary'      => 'Pusat administrasi mahasiswa dan auditorium utama.',
             'badge'        => ['label' => 'Indoor', 'variant' => 'accent'],
             'in_sidebar'   => true,
-            'marker'       => ['x' => 144, 'y' => 204, 'icon' => 'graduation-cap', 'tone' => 'primary'],
+            'lat' => -7.299800,
+            'lng' => 112.700400,
+            'marker' => [
+                'icon' => 'graduation-cap',
+                'tone' => 'primary',
+            ],
         ],
 
         'food-court' => [
@@ -86,7 +115,12 @@ return [
             'summary'      => '12 tenant makanan & minuman kampus.',
             'badge'        => ['label' => 'Kuliner', 'variant' => 'warning'],
             'in_sidebar'   => true,
-            'marker'       => ['x' => 144, 'y' => 356, 'icon' => 'utensils', 'tone' => 'warning'],
+            'lat' => -7.300400,
+            'lng' => 112.700200,
+            'marker' => [
+                'icon' => 'utensils',
+                'tone' => 'warning',
+            ],
         ],
 
         'masjid' => [
@@ -95,6 +129,13 @@ return [
             'distance_m'   => 240,
             'walk_minutes' => 3,
             'description'  => 'Tempat ibadah utama dengan area wudhu terpisah.',
+            'lat' => -7.300500,
+            'lng' => 112.700500,
+
+            'marker' => [
+                'icon' => 'moon-star',
+                'tone' => 'success',
+            ],
         ],
 
         'parkir' => [
@@ -103,6 +144,13 @@ return [
             'distance_m'   => 390,
             'walk_minutes' => 5,
             'description'  => 'Area parkir motor dan mobil beratap.',
+            'lat' => -7.299700,
+            'lng' => 112.700600,
+
+            'marker' => [
+                'icon' => 'parking-circle',
+                'tone' => 'warning',
+            ],
         ],
     ],
 ];

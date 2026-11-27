@@ -9,11 +9,19 @@ class MapController extends Controller
 {
     public function index(BuildingService $buildings): View
     {
+        // Ambil seluruh data gedung
+        $allBuildings = $buildings->all();
+
+        // Ambil gedung yang dipilih secara default
+        $selected = $allBuildings->first();
+
         return view('pages.map.index', [
-            'buildings'        => $buildings->all(),
+            'buildings'        => $allBuildings,
             'sidebarBuildings' => $buildings->forSidebar(),
-            'selected'         => $buildings->default(),
-            'clientPayload'    => $buildings->clientPayload(),
+            'selected'         => $selected,
+
+            // Kirim ID gedung default ke JavaScript
+            'clientPayload'    => $buildings->clientPayload($selected['id']),
         ]);
     }
 }

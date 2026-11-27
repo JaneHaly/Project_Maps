@@ -29,11 +29,30 @@ class BuildingService
     }
 
     /** Data minimal yang dikirim ke JavaScript (dipakai saat gedung dipilih). */
-    public function clientPayload(): Collection
+    public function clientPayload(string $selectedId): array
     {
-        return $this->all()->map(fn (array $b) => Arr::only($b, [
-            'name', 'meta_detail', 'description', 'photo_url', 'indoor_label',
-        ]));
+        return [
+            // Konfigurasi peta Leaflet
+            'map' => config('campusmap.map'),
+
+            // Gedung yang dipilih pertama kali
+            'selected_id' => $selectedId,
+
+            // Data gedung untuk membuat marker Leaflet
+            'buildings' => $this->all()
+                ->map(fn (array $b) => Arr::only($b, [
+                    'id',
+                    'name',
+                    'meta_detail',
+                    'description',
+                    'photo_url',
+                    'indoor_label',
+                    'lat',
+                    'lng',
+                    'marker',
+                ]))
+                ->values(),
+        ];
     }
 
     protected function present(string $id, array $b): array
