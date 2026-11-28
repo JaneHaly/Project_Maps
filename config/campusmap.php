@@ -16,8 +16,8 @@ return [
 
     'map' => [
     'center' => [
-        'lat' => -7.300000,
-        'lng' => 112.700000,
+        'lat' =>   -7.313624, 
+        'lng' => 112.727149,
     ],
 
     'zoom' => 17,
@@ -73,7 +73,7 @@ return [
         ],
 
         'perpustakaan' => [
-            'name'         => 'Perpustakaan Pusat',
+            'name'         => 'Danau Unesa Ketintang',
             'campus'       => 'Kampus A',
             'distance_m'   => 410,
             'walk_minutes' => 5,
@@ -81,11 +81,11 @@ return [
             'summary'      => 'Ruang baca tenang, coworking space, dan Wi-Fi cepat.',
             'badge'        => ['label' => 'Indoor', 'variant' => 'accent'],
             'in_sidebar'   => true,
-            'lat' => -7.300300,
-            'lng' => 112.700300,
+            'lat' =>  -7.314178, 
+            'lng' => 112.725980,
             'marker' => [
-                'icon' => 'book-open',
-                'tone' => 'primary',
+                'icon' => 'waves',
+                'tone' => 'info',
             ],
         ],
 
@@ -98,8 +98,8 @@ return [
             'summary'      => 'Pusat administrasi mahasiswa dan auditorium utama.',
             'badge'        => ['label' => 'Indoor', 'variant' => 'accent'],
             'in_sidebar'   => true,
-            'lat' => -7.299800,
-            'lng' => 112.700400,
+            'lat' => -7.317183, 
+            'lng' => 112.725734,
             'marker' => [
                 'icon' => 'graduation-cap',
                 'tone' => 'primary',
@@ -115,8 +115,8 @@ return [
             'summary'      => '12 tenant makanan & minuman kampus.',
             'badge'        => ['label' => 'Kuliner', 'variant' => 'warning'],
             'in_sidebar'   => true,
-            'lat' => -7.300400,
-            'lng' => 112.700200,
+            'lat' => -7.314301, 
+            'lng' => 112.726751,
             'marker' => [
                 'icon' => 'utensils',
                 'tone' => 'warning',
@@ -129,8 +129,8 @@ return [
             'distance_m'   => 240,
             'walk_minutes' => 3,
             'description'  => 'Tempat ibadah utama dengan area wudhu terpisah.',
-            'lat' => -7.300500,
-            'lng' => 112.700500,
+            'lat' => -7.313768, 
+            'lng' => 112.725260,
 
             'marker' => [
                 'icon' => 'moon-star',
@@ -139,13 +139,13 @@ return [
         ],
 
         'parkir' => [
-            'name'         => 'Area Parkir Timur',
+            'name'         => 'Area Parkir FT',
             'campus'       => 'Kampus A',
             'distance_m'   => 390,
             'walk_minutes' => 5,
             'description'  => 'Area parkir motor dan mobil beratap.',
-            'lat' => -7.299700,
-            'lng' => 112.700600,
+            'lat' => -7.316140, 
+            'lng' => 112.727477,
 
             'marker' => [
                 'icon' => 'parking-circle',

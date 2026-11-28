@@ -34,7 +34,7 @@
         </a>
 
         <div class="grid grid-cols-2 gap-gutter-sm pt-gutter-xs">
-            <button type="button" class="inline-flex items-center justify-center gap-gutter-xs py-gutter-sm px-gutter-md rounded-md bg-primary text-on-primary hover:bg-primary/90">
+            <button type="button" data-start-navigation class="inline-flex items-center justify-center gap-gutter-xs py-gutter-sm px-gutter-md rounded-md bg-primary text-on-primary hover:bg-primary/90">
                 <x-ui.icon name="navigation" class="w-4 h-4" />
                 <span class="font-label text-label-lg whitespace-nowrap">Mulai Navigasi</span>
             </button>

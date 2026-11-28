@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'openrouteservice' => [
+    'api_key' => env('OPENROUTESERVICE_API_KEY'),
+    ],
+
 ];

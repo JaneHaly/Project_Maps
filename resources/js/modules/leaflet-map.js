@@ -17,6 +17,10 @@ const TONE_COLORS = {
     warning: '#d97706',
     success: '#059669',
 };
+// Menyimpan lokasi GPS terakhir pengguna.
+let userCurrentLocation = null;
+// Menyimpan gedung yang sedang dipilih pengguna.
+let selectedBuildingId = null;
 
 /**
  * Membuat tampilan ikon marker menggunakan Lucide.
@@ -66,6 +70,8 @@ export function initLeafletMap() {
     const data = JSON.parse(source.textContent);
     const mapConfig = data.map;
     const buildings = data.buildings || [];
+
+    selectedBuildingId = data.selected_id || null;
 
     if (!mapConfig) {
         console.error('Konfigurasi peta tidak ditemukan.');
@@ -130,6 +136,9 @@ export function initLeafletMap() {
         // Ketika gedung dipilih, perbarui marker.
         document.addEventListener('building:selected', (event) => {
             const selectedId = event.detail.id;
+
+            // Simpan ID gedung yang sedang dipilih.
+            selectedBuildingId = selectedId;
 
             markers.forEach((marker, id) => {
                 const building = buildings.find((b) => b.id === id);
@@ -207,6 +216,10 @@ export function initLeafletMap() {
                         const lat = position.coords.latitude;
                         const lng = position.coords.longitude;
 
+                        // Simpan lokasi pengguna agar bisa digunakan fitur navigasi.
+                        userCurrentLocation = L.latLng(lat, lng);
+
+                        console.log('Lokasi GPS tersimpan:', userCurrentLocation);
                         // Pindahkan peta ke posisi pengguna.
                         map.flyTo([lat, lng], 18, {
                             animate: true,
@@ -272,3 +285,149 @@ export function initLeafletMap() {
     });
 
 }
+
+
+/**
+ * Meminta rute pejalan kaki dari backend Laravel.
+ */
+async function requestWalkingRoute(startLocation, destination) {
+    const csrfToken = document.querySelector(
+        'meta[name="csrf-token"]'
+    )?.content;
+
+    if (!csrfToken) {
+        throw new Error('CSRF token tidak ditemukan.');
+    }
+
+    const response = await fetch('/routing/walking', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+        },
+        body: JSON.stringify({
+            start_lat: startLocation.lat,
+            start_lng: startLocation.lng,
+            end_lat: Number(destination.lat),
+            end_lng: Number(destination.lng),
+        }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        throw new Error(
+            result.message || 'Gagal mendapatkan rute pejalan kaki.'
+        );
+    }
+
+    return result;
+}
+
+
+/**
+ * Menghubungkan tombol Mulai Navigasi.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const navigationButton = document.querySelector(
+        '[data-start-navigation]'
+    );
+
+    if (!navigationButton) return;
+
+    
+navigationButton.addEventListener('click', async () => {
+    if (!userCurrentLocation) {
+        alert('Silakan tekan tombol GPS terlebih dahulu.');
+        return;
+    }
+
+    const source = document.getElementById('campusmap-buildings');
+    const data = JSON.parse(source.textContent);
+
+    const destination = data.buildings.find(
+        (building) => building.id === selectedBuildingId
+    );
+
+    if (!destination) {
+        alert('Gedung tujuan tidak ditemukan.');
+        return;
+    }
+
+    // Deklarasikan di luar try agar bisa digunakan di finally.
+    const buttonText = navigationButton.querySelector('span');
+
+    try {
+        navigationButton.disabled = true;
+
+        if (buttonText) {
+            buttonText.textContent = 'Mencari rute...';
+        }
+
+
+        const routeData = await requestWalkingRoute(
+            userCurrentLocation,
+            destination
+        );
+
+        console.log('Data rute berhasil diterima:', routeData);
+
+        // Cari peta yang sedang terlihat.
+        const containers = [...document.querySelectorAll('[data-leaflet-map]')];
+
+        const visibleContainer = containers.find(
+            (container) => container.getClientRects().length > 0
+        );
+
+        const activeMap = visibleContainer?._leafletMap;
+
+        if (!activeMap) {
+            throw new Error('Peta yang aktif tidak ditemukan.');
+        }
+
+        // Pastikan data GeoJSON memiliki fitur rute.
+        if (!routeData.features || routeData.features.length === 0) {
+            throw new Error('Data rute tidak memiliki jalur.');
+        }
+
+        // Hapus garis rute sebelumnya jika ada.
+        if (activeMap._walkingRouteLayer) {
+            activeMap.removeLayer(activeMap._walkingRouteLayer);
+        }
+
+        // Gambar garis rute baru.
+        activeMap._walkingRouteLayer = L.geoJSON(routeData, {
+            style: {
+                color: '#2563eb',
+                weight: 6,
+                opacity: 0.85,
+            },
+        }).addTo(activeMap);
+
+        // Arahkan tampilan peta agar seluruh rute terlihat.
+        const routeBounds = activeMap._walkingRouteLayer.getBounds();
+
+        if (routeBounds.isValid()) {
+            activeMap.fitBounds(routeBounds, {
+                padding: [40, 40],
+            });
+        }
+
+        console.log('Garis rute berhasil ditampilkan.');
+        alert('Rute berhasil ditampilkan di peta!');
+
+    } catch (error) {
+        console.error('Kesalahan navigasi:', error);
+        alert(error.message);
+    } finally {
+        navigationButton.disabled = false;
+
+        if (buttonText) {
+            buttonText.textContent = 'Mulai Navigasi';
+        }
+    }
+});
+
+});
+
